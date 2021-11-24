@@ -13,5 +13,6 @@ const proSettings = {
   title: 'Karita City',
   pwa: false,
   iconfontUrl: '',
+  
 };
 export default proSettings;

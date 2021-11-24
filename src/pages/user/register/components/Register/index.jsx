@@ -2,13 +2,13 @@ import { Tabs, Form } from 'antd';
 import React, { useState } from 'react';
 import useMergeValue from 'use-merge-value';
 import classNames from 'classnames';
-import LoginContext from './LoginContext';
-import LoginItem from './LoginItem';
-import LoginSubmit from './LoginSubmit';
-import LoginTab from './LoginTab';
+import RegisterContext from './RegisterContext';
+import RegisterItem from './RegisterItem';
+import RegisterSubmit from './RegisterSubmit';
+import RegisterTab from './RegisterTab';
 import styles from './index.less';
 
-const Login = (props) => {
+const Register = (props) => {
   const { className } = props;
   const [tabs, setTabs] = useState([]);
   const [active, setActive] = useState({});
@@ -23,14 +23,14 @@ const Login = (props) => {
       return;
     }
 
-    if (child.type.typeName === 'LoginTab') {
+    if (child.type.typeName === 'RegisterTab') {
       TabChildren.push(child);
     } else {
       otherChildren.push(child);
     }
   });
   return (
-    <LoginContext.Provider
+    <RegisterContext.Provider
       value={{
         tabUtil: {
           addTab: (id) => {
@@ -53,7 +53,7 @@ const Login = (props) => {
         },
       }}
     >
-      <div className={classNames(className, styles.Login)}>
+      <div className={classNames(className, styles.Register)}>
         <Form
           form={props.from}
           onFinish={(values) => {
@@ -82,14 +82,14 @@ const Login = (props) => {
           )}
         </Form>
       </div>
-    </LoginContext.Provider>
+    </RegisterContext.Provider>
   );
 };
 
-Login.Tab = LoginTab;
-Login.Submit = LoginSubmit;
-Login.UserName = LoginItem.UserName;
-Login.Password = LoginItem.Password;
+Register.Tab = RegisterTab;
+Register.Submit = RegisterSubmit;
+Register.UserName = RegisterItem.UserName;
+Register.Password = RegisterItem.Password;
+Register.Email = RegisterItem.Email;
 
-
-export default Login;
+export default Register;

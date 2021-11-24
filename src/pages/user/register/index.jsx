@@ -2,12 +2,12 @@ import { AlipayCircleOutlined, TaobaoCircleOutlined, WeiboCircleOutlined } from 
 import { Alert } from 'antd';
 import React, { useState } from 'react';
 import {  connect } from 'umi';
-import LoginForm from './components/Login';
+import RegisterForm from './components/Register';
 import styles from './style.less';
 
-const { Tab, UserName,  Password, Submit } = LoginForm;
+const { Tab, UserName, Email , Password, Submit } = RegisterForm;
 
-const LoginMessage = ({ content }) => (
+const RegisterMessage = ({ content }) => (
   <Alert
     style={{
       marginBottom: 24,
@@ -18,27 +18,37 @@ const LoginMessage = ({ content }) => (
   />
 );
 
-const Login = (props) => {
-  const { userLogin = {}, submitting } = props;
-   const { status, type: LoginType } = userLogin;
+const Register = (props) => {
+  const { userRegister = {}, submitting } = props;
+  const { status, type: RegisterType } = userRegister;
   const [type, setType] = useState('account');
 
   const handleSubmit = (values) => {
     const { dispatch } = props;
     dispatch({
-      type: 'login/login',
+      type: 'register/register',
       payload: { ...values, type },
     });
   };
 
   return (
     <div className={styles.main}>
-      <LoginForm activeKey={type} onTabChange={setType} onSubmit={handleSubmit}>
+      <RegisterForm activeKey={type} onTabChange={setType} onSubmit={handleSubmit}>
         <Tab key="account">
-          {status === 'error' && LoginType === 'account' && !submitting && (
-            <LoginMessage content="（admin@gmail.com/admin/ant.design）" />
+          {status === 'error' && RegisterType === 'account' && !submitting && (
+            <RegisterMessage content="（admin@gmail.com/admin/ant.design）" />
           )}
-           
+            <Email
+            style={{'border-radius': '10rem'}}
+            name="email"
+            placeholder=" admin or user @gmail"
+            rules={[
+              {
+                required: true,
+                message: 'Enter your email please',
+              },
+            ]}
+          />
           <UserName
           style={{'border-radius': '10rem'}}
             name="userName"
@@ -62,8 +72,7 @@ const Login = (props) => {
             ]}
           />
         </Tab>
-        
-           
+       
        
         <Submit
          style={{
@@ -71,14 +80,14 @@ const Login = (props) => {
            'width': '100%' ,
            'margin-top': '24px'}} 
 
-           loading={submitting}>Login</Submit>
+           loading={submitting}>Register</Submit>
         
-      </LoginForm>
+      </RegisterForm>
     </div>
   );
 };
 
-export default connect(({ login, loading }) => ({
-  userLogin: login,
-  submitting: loading.effects['login/login'],
-}))(Login);
+export default connect(({ register, loading }) => ({
+  userRegister: register,
+  submitting: loading.effects['register/register'],
+}))(Register);

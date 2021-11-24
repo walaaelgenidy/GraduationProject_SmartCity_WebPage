@@ -2,7 +2,6 @@
 import { defineConfig } from 'umi';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
-
 const { REACT_APP_ENV } = process.env;
 export default defineConfig({
   hash: true,
@@ -12,7 +11,7 @@ export default defineConfig({
   },
   locale: {
     // default zh-CN
-    default: 'zh-CN',
+    default: 'en-US',
     // default true, when it is true, will use `navigator.language` overwrite default
     antd: true,
     baseNavigator: true,
@@ -23,72 +22,87 @@ export default defineConfig({
   targets: {
     ie: 11,
   },
+ 
   // umi routes: https://umijs.org/docs/routing
   routes: [
     {
-      path: '/user',
-      component: '../layouts/UserLayout',
-      routes: [
-        {
-          name: 'login',
-          path: '/user/login',
-          component: './user/login',
-        },
-      ],
-    },
-    {
       path: '/',
-      component: '../layouts/SecurityLayout',
+      component: '../layouts/BlankLayout',
       routes: [
         {
-          path: '/',
-          component: '../layouts/BasicLayout',
-          authority: ['admin', 'user'],
+          path: '/user',
+          component: '../layouts/UserLayout',
           routes: [
             {
-              path: '/',
-              redirect: '/welcome',
+              path: '/user',
+              redirect: '/user/login',
             },
             {
-              path: '/welcome',
-              name: 'welcome',
+              name: 'login',
               icon: 'smile',
-              component: './Welcome',
+              path: '/user/login',
+              component: './user/login',
             },
+           
             {
-              path: '/admin',
-              name: 'admin',
-              icon: 'crown',
-              component: './Admin',
-              authority: ['admin'],
-              routes: [
-                {
-                  path: '/admin/sub-page',
-                  name: 'sub-page',
-                  icon: 'smile',
-                  component: './Welcome',
-                  authority: ['admin'],
-                },
-              ],
+              name: 'register',
+              icon: 'smile',
+              path: '/user/register',
+              component: './user/register',
             },
+            
+        
             {
-              name: 'list.table-list',
-              icon: 'table',
-              path: '/list',
-              component: './ListTableList',
-            },
-            {
-              component: './404',
+              component: '404',
             },
           ],
         },
         {
-          component: './404',
+          path: '/',
+          component: '../layouts/BasicLayout',
+          Routes: ['src/pages/Authorized'],
+          authority: ['admin', 'user'],
+          routes: [
+            
+            {
+              name: 'Home',
+              icon: 'smile',
+              path: '/Home',
+              component: './Home',
+            },
+            {
+              name: 'statitics',
+              icon: 'user',
+              path: '/statistics',
+              component: './statistics',
+            },
+             {
+               name: 'sensor',
+               icon: 'user',
+               path: '/sensors',
+               component: './sensors',
+             },
+             {
+              name: 'streets',
+              icon: 'user',
+              path: '/streets',
+              component: './streets',
+            },
+            
+            {
+              name: 'settings',
+              icon: 'user',
+              path: '/settings',
+              component: './settings',
+            },
+            
+            
+            {
+              component: '404',
+            },
+          ],
         },
       ],
-    },
-    {
-      component: './404',
     },
   ],
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn

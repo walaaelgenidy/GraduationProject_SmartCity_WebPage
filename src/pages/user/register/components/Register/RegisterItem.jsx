@@ -2,7 +2,7 @@ import { Button, Col, Input, Row, Form, message } from 'antd';
 import React, { useState, useCallback, useEffect } from 'react';
 import omit from 'omit.js';
 import ItemMap from './map';
-import LoginContext from './LoginContext';
+import RegisterContext from './RegisterContext';
 import styles from './index.less';
 
 const FormItem = Form.Item;
@@ -23,7 +23,7 @@ const getFormItemOptions = ({ onChange, defaultValue, customProps = {}, rules })
   return options;
 };
 
-const LoginItem = (props) => {
+const RegisterItem = (props) => {
   const [count, setCount] = useState(props.countDown || 0);
   const [timing, setTiming] = useState(false); // 这么写是为了防止restProps中 带入 onChange, defaultValue, rules props tabUtil
 
@@ -76,14 +76,14 @@ const LoginItem = (props) => {
   );
 };
 
-const LoginItems = {};
+const RegisterItems = {};
 Object.keys(ItemMap).forEach((key) => {
   const item = ItemMap[key];
 
-  LoginItems[key] = (props) => (
-    <LoginContext.Consumer>
+  RegisterItems[key] = (props) => (
+    <RegisterContext.Consumer>
       {(context) => (
-        <LoginItem
+        <RegisterItem
           customProps={item.props}
           rules={item.rules}
           {...props}
@@ -92,7 +92,7 @@ Object.keys(ItemMap).forEach((key) => {
           updateActive={context.updateActive}
         />
       )}
-    </LoginContext.Consumer>
+    </RegisterContext.Consumer>
   );
 });
-export default LoginItems;
+export default RegisterItems;

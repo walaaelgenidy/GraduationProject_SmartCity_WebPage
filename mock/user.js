@@ -1,17 +1,12 @@
-function getFakeCaptcha(req, res) {
-  return res.json('captcha-xxx');
-} // 代码中会兼容本地 service mock 以及部署站点的静态数据
 
 export default {
   // 支持值为 Object 和 Array
   'GET /api/currentUser': {
-    name: 'Serati Ma',
+    name: 'WALAA GAMAL',
     avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
     userid: '00000001',
-    email: 'antdesign@alipay.com',
-    signature: '海纳百川，有容乃大',
-    title: '交互专家',
-    group: '蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED',
+    email: 'Walaa@gmail.com',
+    
     tags: [
       {
         key: '0',
@@ -40,18 +35,9 @@ export default {
     ],
     notifyCount: 12,
     unreadCount: 11,
-    country: 'China',
-    geographic: {
-      province: {
-        label: '浙江省',
-        key: '330000',
-      },
-      city: {
-        label: '杭州市',
-        key: '330100',
-      },
-    },
-    address: '西湖区工专路 77 号',
+    country: 'Egypt',
+    
+    address: 'mansoura',
     phone: '0752-268888888',
   },
   // GET POST 可省略
@@ -96,7 +82,18 @@ export default {
       return;
     }
 
-    if (type === 'mobile') {
+   
+
+    res.send({
+      status: 'error',
+      type,
+      currentAuthority: 'guest',
+    });
+  },
+  'POST /api/register/account': (req, res) => {
+    const { password, userName,email ,type } = req.body;
+
+    if (password === 'ant.design' && userName === 'admin' && email === 'admin@gmail.com') {
       res.send({
         status: 'ok',
         type,
@@ -105,6 +102,17 @@ export default {
       return;
     }
 
+    if (password === 'ant.design' && userName === 'user' && email ==='user@gmail.com' ) {
+      res.send({
+        status: 'ok',
+        type,
+        currentAuthority: 'user',
+      });
+      return;
+    }
+
+   
+
     res.send({
       status: 'error',
       type,
@@ -112,11 +120,11 @@ export default {
     });
   },
   'POST /api/register': (req, res) => {
-    res.send({
-      status: 'ok',
-      currentAuthority: 'user',
-    });
-  },
+     res.send({
+     status: 'ok',
+       currentAuthority: 'user',
+     });
+   },
   'GET /api/500': (req, res) => {
     res.status(500).send({
       timestamp: 1513932555104,
@@ -153,5 +161,5 @@ export default {
       path: '/base/category/list',
     });
   },
-  'GET  /api/login/captcha': getFakeCaptcha,
+  
 };

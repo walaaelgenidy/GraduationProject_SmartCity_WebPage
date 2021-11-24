@@ -24,8 +24,27 @@ export default {
       },
     ],
   },
- 
-  
+  Email: {
+    props: {
+      size: 'large',
+      id: 'email',
+      prefix: (
+        <UserOutlined
+          style={{
+            color: '#ffffff',
+          }}
+          className={styles.prefixIcon}
+        />
+      ),
+      placeholder: 'admin@gmail.com',
+    },
+    rules: [
+      {
+        required: true,
+        message: 'Please enter email!',
+      },
+    ],
+  },
   Password: {
     props: {
       size: 'large',
